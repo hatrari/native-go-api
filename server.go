@@ -2,6 +2,11 @@ package main
 
 import "net/http"
 
+type User struct {
+	Id		string
+	Name	string
+}
+
 func usersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
