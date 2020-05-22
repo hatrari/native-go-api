@@ -7,11 +7,22 @@ type User struct {
 	Name	string
 }
 
-func usersHandler(w http.ResponseWriter, r *http.Request) {
+type usersHandler struct {
+	store map[string]User
+}
+
+func (h *usersHandler) get(w http.ResponseWriter, r *http.Request) {
+}
+
+func newUsersHandler() *usersHandler {
+	return &usersHandler {
+		store: map[string]User{},
+	}
 }
 
 func main() {
-	http.HandleFunc("/users", usersHandler)
+	usersHandler := newUsersHandler()
+	http.HandleFunc("/users", usersHandler.get)
 	err := http.ListenAndServe(":8000", nil)
 	if err != nil {
 		panic(err)
