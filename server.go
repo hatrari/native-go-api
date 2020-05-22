@@ -1,6 +1,7 @@
 package main
 
 import "net/http"
+import "encoding/json"
 
 type User struct {
 	Id		string
@@ -12,11 +13,27 @@ type usersHandler struct {
 }
 
 func (h *usersHandler) get(w http.ResponseWriter, r *http.Request) {
+	users := make([]User, len(h.store))
+
+	i := 0
+	for _, user := range h.store {
+		users[i] = user
+		i++
+	}
+
+	jsonBytes, err := json.Marshal(users)
+	if err != nil {
+		// todo
+	}
+
+	w.Write(jsonBytes)
 }
 
 func newUsersHandler() *usersHandler {
 	return &usersHandler {
-		store: map[string]User{},
+		store: map[string]User{
+			"id1": User{"aaaa","name"},
+		},
 	}
 }
 
