@@ -62,6 +62,13 @@ func (h *usersHandler) post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ct := r.Header.Get("content-type")
+	if ct != "application/json" {
+		w.WriteHeader(http.StatusUnsupportedMediaType)
+		w.Write([]byte("Unsupported media type."))
+		return
+	}
+
 	var user User
 	err = json.Unmarshal(bodyBytes, &user)
 	if err != nil {
